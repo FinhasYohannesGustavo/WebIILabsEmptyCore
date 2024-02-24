@@ -22,7 +22,14 @@ namespace WebII_Labs.Functions
         {
             return x * x;
         }
-        
+
+        public static double SquareDouble(int x)
+        {
+            double y = x * x;
+
+            return y;
+        }
+
         public delegate TOutput customFunc<in T,out TOutput>(T inputVar);
 
         customFunc<int,int> squarecustom = Square;

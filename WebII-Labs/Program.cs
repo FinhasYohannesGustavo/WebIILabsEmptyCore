@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
+using WebII_Labs.CustomMiddlewares;
 using WebII_Labs.Functions;
 
 public delegate TOutput customFunc<in T, out TOutput>(T inputVar);
@@ -22,8 +23,25 @@ class Program
         Functions.customSwapper(ref fname, ref lname);
         await context.Response.WriteAsync("<br> After swapping names, First Name is " + fname + " Last name is " + lname);
 
+        //using the delegate to create an anonymous square function
+
+        //using lambda expression
+        //customFunc<int, double> squareCustom = x => x * x;
+        customFunc<int, double> squareCustom = Functions.SquareDouble;
+
+        //using delegate keyword
+        Func<int, int, int> sum = delegate(int x, int y)
+        {
+            return x + y;
+        };
+
+        int squareNum = 14;
+        context.Response.WriteAsync("<br> The square of " + squareNum + " is " + squareCustom(squareNum));
+
         await context.Response.WriteAsync("<h2> Are you even there? </h2>");
+
         await next();
+
     }
 
     static async Task MiddleWare2V2(HttpContext context, Func<Task> next)
@@ -40,11 +58,11 @@ class Program
         await next();
     }
 
-    static async Task MiddleWare4(HttpContext context, Func<Task> next)
+    static async Task MiddleWare4(HttpContext context, RequestDelegate next)
     {
         context.Response.ContentType = "text/html";
         await context.Response.WriteAsync("<h1> Already on middleware 4</h2>");
-        await next();
+        await next(context);
     }
 
     static void Main(string[] args)
@@ -52,12 +70,16 @@ class Program
         var builder = WebApplication.CreateBuilder(args);
         var app = builder.Build();
 
-        app.MapGet("/", () => "Hello World!");
+        /*app.MapGet("/", () => "Hello World!");
 
         app.Use(WriteHeader);
-        //app.Use(MiddleWare2V2);
-        //app.Use(Middleware3);
-        //app.Use(MiddleWare4);
+        app.Use(MiddleWare2V2);
+        app.Use(Middleware3);
+        app.Use(MiddleWare4);*/
+        app.UseStaticFiles();
+        app.UseMiddleware<ErrorHandling>();
+        app.UseMiddleware<ErrorCreator>();
+        
 
         app.Run();
     }
