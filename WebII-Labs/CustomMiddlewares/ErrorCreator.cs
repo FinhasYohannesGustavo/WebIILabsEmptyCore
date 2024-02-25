@@ -10,12 +10,11 @@
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.Request.Path.ToString() == "/HomePage.html")
+            if (context.Request.Path.ToString() != "/HomePage.html")
             {
-                context.Response.StatusCode = 501;
+                context.Response.StatusCode = 40;
                 context.Response.Headers.Add("X-Test-headerss", "Test header information");
-                /*context.Response.WriteAsync("<h3> This is a test </h3>");*/
-
+                return;
             }
             await _next(context);
         }
