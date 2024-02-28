@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 using WebII_Labs.CustomMiddlewares;
@@ -9,7 +10,7 @@ public delegate TOutput customFunc<in T, out TOutput>(T inputVar);
 
 class Program
 {
-    static async Task WriteHeader(HttpContext context, Func<Task> next)
+   /* static async Task WriteHeader(HttpContext context, Func<Task> next)
     {
         int num1 = 10, num2 = 20;
         context.Response.ContentType = "text/html";
@@ -64,7 +65,7 @@ class Program
         await context.Response.WriteAsync("<h1> Already on middleware 4</h2>");
         await next(context);
     }
-
+   */
     static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -76,11 +77,24 @@ class Program
         app.Use(MiddleWare2V2);
         app.Use(Middleware3);
         app.Use(MiddleWare4);*/
-        app.UseStaticFiles();
+        //This is an extension method.
         app.UseMiddleware<ErrorHandling>();
         app.UseMiddleware<ErrorCreator>();
-        
+        app.UseMiddleware<UseMyDefaultFiles>("/ServerError.html");
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/ErrorPage.html");
+        }
+        app.UseStaticFiles();
 
+
+        //app.UseMiddleware<CheckStatusMiddleware>();
+        //app.UseMiddleware<SetStatusMiddleware>();
+        app.UseStaticFiles();
         app.Run();
     }
 }

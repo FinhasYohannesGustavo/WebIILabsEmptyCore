@@ -10,7 +10,7 @@
     {
         await _next(context);
 
-        if (context.Request.Path != "/HomePage.html")
+        if (context.Request.Path == "/")
         {
             if (context.Response.StatusCode == 501)
             {

@@ -10,9 +10,9 @@
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.Request.Path.ToString() != "/HomePage.html")
+            if (context.Request.Path.ToString() == "/")
             {
-                context.Response.StatusCode = 40;
+                context.Response.StatusCode = 404;
                 context.Response.Headers.Add("X-Test-headerss", "Test header information");
                 return;
             }
