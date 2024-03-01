@@ -69,7 +69,9 @@ class Program
     static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddControllersWithViews();
         var app = builder.Build();
+
 
         /*app.MapGet("/", () => "Hello World!");
 
@@ -78,9 +80,9 @@ class Program
         app.Use(Middleware3);
         app.Use(MiddleWare4);*/
         //This is an extension method.
-        app.UseMiddleware<ErrorHandling>();
-        app.UseMiddleware<ErrorCreator>();
-        app.UseMiddleware<UseMyDefaultFiles>("/ServerError.html");
+        //app.UseMiddleware<ErrorHandling>();
+        //app.UseMiddleware<ErrorCreator>();
+        //app.UseMiddleware<UseMyDefaultFiles>("/product/Index");
         //if (app.Environment.IsDevelopment())
         //{
         //    app.UseDeveloperExceptionPage();
@@ -94,7 +96,17 @@ class Program
 
         //app.UseMiddleware<CheckStatusMiddleware>();
         //app.UseMiddleware<SetStatusMiddleware>();
-        app.UseStaticFiles();
+        //app.UseStaticFiles();
+
+        //MVC
+        app.MapDefaultControllerRoute();
+        app.MapControllerRoute(
+            name: "default",
+            pattern:"{controller=Product}/{action=Index}/{id?}"
+
+            );
+        
+        
         app.Run();
     }
 }

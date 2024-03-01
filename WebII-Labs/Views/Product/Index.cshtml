@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+        @Model List<Product>
+        @foreach(var prod in Model){
+            <div class="@prod.Name">
+                <h3>@prod.Id @prod.Name</h3>
+                <p>@prod.Description</p>
+                <p>@prod.Quantity</p>
+                <p>@prod.UnitPrice</p>
+            </div>         
+        } 
+</body>
+</html>
