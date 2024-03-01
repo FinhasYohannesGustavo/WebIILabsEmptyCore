@@ -81,15 +81,15 @@ class Program
         app.UseMiddleware<ErrorHandling>();
         app.UseMiddleware<ErrorCreator>();
         app.UseMiddleware<UseMyDefaultFiles>("/ServerError.html");
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            app.UseExceptionHandler("/ErrorPage.html");
-        }
-        app.UseStaticFiles();
+        //if (app.Environment.IsDevelopment())
+        //{
+        //    app.UseDeveloperExceptionPage();
+        //}
+        //else
+        //{
+        //    app.UseExceptionHandler("/ErrorPage.html");
+        //}
+        //app.UseStaticFiles();
 
 
         //app.UseMiddleware<CheckStatusMiddleware>();

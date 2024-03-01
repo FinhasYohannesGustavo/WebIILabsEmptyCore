@@ -17,13 +17,13 @@
             if (context.Request.Path == "/")
             {
                 if(_path == null) {
-                    context.Response.Redirect("HomePage.html");
-                    return;
+                    context.Response.Redirect("HomePage.html", false);
+                    
                 }
                 else
                 {
-                    context.Response.Redirect(_path);
-                    return;
+                    context.Response.Redirect(_path,false);
+                    
                 }
 
             }

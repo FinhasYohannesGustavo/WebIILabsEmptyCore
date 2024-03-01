@@ -14,7 +14,7 @@
             {
                 context.Response.Redirect("/ErrorPage.html");
                // await context.Response.SendFileAsync("/ErrorPage.html");
-                return;
+                //return;
             }
         }
     }
