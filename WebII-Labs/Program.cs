@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -83,14 +84,14 @@ class Program
         //app.UseMiddleware<ErrorHandling>();
         //app.UseMiddleware<ErrorCreator>();
         //app.UseMiddleware<UseMyDefaultFiles>("/product/Index");
-        //if (app.Environment.IsDevelopment())
-        //{
-        //    app.UseDeveloperExceptionPage();
-        //}
-        //else
-        //{
-        //    app.UseExceptionHandler("/ErrorPage.html");
-        //}
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/ErrorPage.html");
+        }
         //app.UseStaticFiles();
 
 
@@ -99,14 +100,14 @@ class Program
         //app.UseStaticFiles();
 
         //MVC
-        app.MapDefaultControllerRoute();
+        //app.MapDefaultControllerRoute("{controller=Product}/{action=getDummyProducts}/{id?}");
         app.MapControllerRoute(
             name: "default",
-            pattern:"{controller=Product}/{action=Index}/{id?}"
+            pattern: "{controller=Product}/{action=getDummyProducts}/{id?}"
 
             );
-        
-        
+
+
         app.Run();
     }
 }

@@ -5,7 +5,7 @@ namespace WebII_Labs.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Index()
+        public IActionResult getDummyProducts()
         {
             List<Product> products = new List<Product>()
             {
@@ -32,7 +32,7 @@ namespace WebII_Labs.Controllers
                     Name= "Shoes",
                     Description="Just for wearing",
                     Quantity = 100,
-                    UnitPrice=10
+                    UnitPrice=0
                 }
 
             };
@@ -41,6 +41,7 @@ namespace WebII_Labs.Controllers
             //    products = products
             //};
             //ViewData["products"] = products;
+            //return new JsonResult(products);
             return View(products);
         }
     }
